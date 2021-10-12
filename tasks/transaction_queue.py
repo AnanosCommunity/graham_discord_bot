@@ -44,10 +44,7 @@ class TransactionQueue(object):
         if user is None:
             self.logger.warn(f"User with ID {tx.sending_user.id} was not found, so I couldn't notify them of their withdraw")
             return
-        if Env.banano():
-            await user.send(f"Withdraw processed: https://creeper.banano.cc/explorer/block/{hash}")
-        else:
-            await user.send(f"Withdraw processed: https://nanocrawler.cc/explorer/block/{hash}")
+        await user.send(f"Withdraw processed: https://ananault.lightcord.org/transaction/{hash}")
 
     async def retry(self, tx: Transaction):
         delay = tx.retries + 1 * 5

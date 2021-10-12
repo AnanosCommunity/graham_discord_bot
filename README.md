@@ -1,5 +1,7 @@
 
-# Graham - Discord Bot for BANANO and NANO
+# Graham - Discord Bot for BANANO, NANO and ANANOS
+
+> You're currently on the Ananos version. Please see [Graham](https://github.com/bbedward/graham_discord_bot/) for the original non-forked one.
 
 [![GitHub release (latest)](https://img.shields.io/github/v/release/bbedward/graham_discord_bot)](https://github.com/bbedward/graham_discord_bot/releases) [![License](https://img.shields.io/github/license/bbedward/graham_discord_bot)](https://github.com/bbedward/graham_discord_bot/blob/master/LICENSE) [![CI](https://github.com/bbedward/graham_discord_bot/workflows/CI/badge.svg)](https://github.com/bbedward/graham_discord_bot/actions)
 

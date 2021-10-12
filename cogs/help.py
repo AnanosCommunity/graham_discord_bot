@@ -123,7 +123,7 @@ class HelpCog(commands.Cog):
         """Builds paginated help menu"""
         pages = []
         # Overview
-        author=f"Graham v{__version__} ({'BANANO' if Env.banano() else 'Nano'}) edition"
+        author=f"Graham v{__version__} ({'Ananos'}) edition"
         title="Command Overview"
         description=("Use `{0}help command` for more information about a specific command " +
                 " or go to the next page").format(config.Config.instance().command_prefix)
@@ -143,14 +143,16 @@ class HelpCog(commands.Cog):
         # Info
         entries = [Entry(f"{config.Config.instance().command_prefix}{tips.TIPAUTHOR_INFO.triggers[0]}", tips.TIPAUTHOR_INFO.details)]
         author=f"Graham v{__version__} for {Env.currency_name()}"
-        heart = '\U0001F49B' if Env.banano() else '\U0001F499'
+        heart = '💚'
         description = "This bot is completely free, open source, and MIT licensed"
         description+= f"\n\nMade with {heart} for the **BANANO** and **NANO** communities"
-        description+= f"\nHangout with some awesome people at https://chat.banano.cc"
-        description+= f"\nMy Discord: **@bbedward#9246**"
-        description+= f"\nMy Reddit: **/u/bbedward**"
-        description+= f"\nMy Twitter: **@theRealBbedward**"
-        description+= f"\n\nGraham GitHub: https://github.com/bbedward/graham_discord_bot"
+        description+= f"\n\nForked with {heart} for the **ANANOS** community"
+        description+= f"\nHangout with some awesome people at https://discord.gg/nrrgVC9awN"
+        description+= f"\nMy Discord: **@Not Thomiz#0001**"
+        description+= f"\nMy Reddit: **/u/aThomized**"
+        description+= f"\nMy Twitter: **@NotThomiz**"
+        description+= f"\n\nGraham Ananos GitHub: https://github.com/AnanosCommunity/graham_discord_bot"
+        description+= f"\n\nGraham Original GitHub: https://github.com/bbedward/graham_discord_bot"
         pages.append(Page(entries=entries, author=author,description=description))
         return pages
 

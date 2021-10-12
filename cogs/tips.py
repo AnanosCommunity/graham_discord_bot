@@ -21,31 +21,31 @@ from util.util import Utils
 
 ## Command documentation
 TIP_INFO = CommandInfo(
-    triggers = ["ban", "b"] if Env.banano() else ["ntip", "n"],
+    triggers = ["ana", "a"],
     overview = "Send a tip to mentioned users",
     details = f"Tip specified amount to mentioned user(s) (**minimum tip is {Constants.TIP_MINIMUM} {Constants.TIP_UNIT}**)" +
         "\nThe recipient(s) will be notified of your tip via private message" +
         "\nSuccessful tips will be deducted from your available balance immediately.\n" +
-     f"Example: `{config.Config.instance().command_prefix}{'ban' if Env.banano() else 'ntip'} 2 @user1 @user2` would send 2 to user1 and 2 to user2"
+     f"Example: `{config.Config.instance().command_prefix}ana 2 @user1 @user2` would send 2 to user1 and 2 to user2"
 )
 TIPSPLIT_INFO = CommandInfo(
-    triggers = ["bansplit", "bs"] if Env.banano() else ["ntipsplit", "ns"],
+    triggers = ["anasplit", "as"],
     overview = "Split a tip among mentioned users",
     details = f"Divide the specified amount between mentioned user(s) (**minimum tip is {Constants.TIP_MINIMUM} {Constants.TIP_UNIT}**)" +
         "\nThe recipient(s) will be notified of your tip via private message" +
         "\nSuccessful tips will be deducted from your available balance immediately.\n" +
-     f"Example: `{config.Config.instance().command_prefix}{'bansplit' if Env.banano() else 'ntipsplit'} 2 @user1 @user2` would send 1 to user1 and 2 to user2"
+     f"Example: `{config.Config.instance().command_prefix}anasplit 2 @user1 @user2` would send 1 to user1 and 2 to user2"
 )
 TIPRANDOM_INFO = CommandInfo(
-    triggers = ["banrandom", "br"] if Env.banano() else ["ntiprandom", "ntr"],
+    triggers = ["anarandom", "ar"],
     overview = "Tip an active user at random.",
     details = f"Tips the specified amount to an active user at random (**minimum tip is {Constants.TIPRANDOM_MINIMUM} {Constants.TIP_UNIT}**)" +
         "\nThe recipient will be notified of your tip via private message and you'll be notified of who the random recipient was."
 )
 TIPAUTHOR_INFO = CommandInfo(
-    triggers = ["banauthor", "tipauthor"] if Env.banano() else ["tipauthor"],
+    triggers = ["anaauthor", "tipauthor"],
     overview = "Donate to support my creator",
-    details = f"Support the author of this bot (bbedward)"
+    details = f"Support the host of this bot (Not Thomiz)"
 )
 
 class TipsCog(commands.Cog):
@@ -132,7 +132,7 @@ class TipsCog(commands.Cog):
         tx = await Transaction.create_transaction_external(
             sending_user=user,
             amount=send_amount,
-            destination='ban_1burnbabyburndiscoinferno111111111111111111111111111aj49sw3w'
+            destination='ana_1111111111111111111111111111111111111111111111111111hifc8npp'
         )
         # Add reactions
         await Messages.add_burn_reaction(msg)

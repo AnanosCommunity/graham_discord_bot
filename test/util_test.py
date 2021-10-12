@@ -1,7 +1,7 @@
 import asyncio
 import unittest
 import os
-from util.conversions import BananoConversions, NanoConversions
+from util.conversions import AnanosConversions
 from util.env import Env
 from util.regex import RegexUtil, AmountAmbiguousException, AmountMissingException, AddressAmbiguousException, AddressMissingException
 from util.util import Utils
@@ -15,19 +15,13 @@ def async_test(coro):
 
 class TestConversions(unittest.TestCase):
     def test_unit_conversions(self):
-        self.assertEqual(BananoConversions.raw_to_banano(101000000000000000000000000000), 1.01)
-        self.assertEqual(BananoConversions.banano_to_raw(1.01), 101000000000000000000000000000)
-        self.assertEqual(BananoConversions.banano_to_raw(19.06), 1906000000000000000000000000000)
-        self.assertEqual(BananoConversions.banano_to_raw(0.25), 25000000000000000000000000000)
-        self.assertEqual(BananoConversions.banano_to_raw(50), 5000000000000000000000000000000)
-        self.assertEqual(BananoConversions.banano_to_raw(0.2), 20000000000000000000000000000)
-        self.assertEqual(BananoConversions.banano_to_raw(19.089999), 1908000000000000000000000000000)
-        self.assertEqual(NanoConversions.raw_to_nano(123456789000000000000000000000000), 123.456789)
-        self.assertEqual(NanoConversions.nano_to_raw(123.456789), 123456789000000000000000000000000)
-        self.assertEqual(NanoConversions.nano_to_raw(123), 123000000000000000000000000000000)
-        self.assertEqual(NanoConversions.nano_to_raw(0.25), 250000000000000000000000000000)
-        self.assertEqual(NanoConversions.nano_to_raw(0.2), 200000000000000000000000000000)
-        self.assertEqual(NanoConversions.nano_to_raw(0.123456), 123456000000000000000000000000)
+        self.assertEqual(AnanosConversions.raw_to_ananos(10100000000000000000000000000), 1.01)
+        self.assertEqual(AnanosConversions.ananos_to_raw(1.01), 10100000000000000000000000000)
+        self.assertEqual(AnanosConversions.ananos_to_raw(19.06), 190600000000000000000000000000)
+        self.assertEqual(AnanosConversions.ananos_to_raw(0.25), 2500000000000000000000000000)
+        self.assertEqual(AnanosConversions.ananos_to_raw(50), 500000000000000000000000000000)
+        self.assertEqual(AnanosConversions.ananos_to_raw(0.2), 2000000000000000000000000000)
+        self.assertEqual(AnanosConversions.ananos_to_raw(19.089999), 190800000000000000000000000000)
 
 class TestEnv(unittest.TestCase):
     def test_truncate_digits(self):
@@ -56,44 +50,19 @@ class TestRegexUtil(unittest.TestCase):
             RegexUtil.find_send_amounts('Hello 1.23 4.56 World')
 
     def test_find_address(self):
-        os.environ['BANANO'] = 'true'
-        self.assertEqual(RegexUtil.find_address_match('sdasdasban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdadasd'), 'ban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse')
+        self.assertEqual(RegexUtil.find_address_match('sdasdasana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdadasd'), 'ana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse')
         with self.assertRaises(AddressAmbiguousException):
-            RegexUtil.find_address_match('sdasdban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdasd ban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse sban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse')
-        with self.assertRaises(AddressMissingException):
-            RegexUtil.find_address_match('sdadsd')
-
-        del os.environ['BANANO']
-        self.assertEqual(RegexUtil.find_address_match('sdasdasnano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdadasd'), 'nano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse')
-        with self.assertRaises(AddressAmbiguousException):
-            RegexUtil.find_address_match('sdasdnano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdasd nano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse snano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse')
-        with self.assertRaises(AddressMissingException):
-            RegexUtil.find_address_match('sdadsd')
-        # XRB
-        self.assertEqual(RegexUtil.find_address_match('sdasdasxrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdadasd'), 'xrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse')
-        with self.assertRaises(AddressAmbiguousException):
-            RegexUtil.find_address_match('sdasdxrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdasd xrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse sxrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse')
+            RegexUtil.find_address_match('sdasdana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdasd ana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse sana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse')
         with self.assertRaises(AddressMissingException):
             RegexUtil.find_address_match('sdadsd')
 
     def test_find_addresses(self):
         # Multiple addresses
-        os.environ['BANANO'] = 'true'
-        self.assertEqual(RegexUtil.find_address_matches('sdasdasban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdadasd'), ['ban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'])
-        self.assertEqual(RegexUtil.find_address_matches('sdasdban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdasd ban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse sban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'), ['ban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse', 'ban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse', 'ban_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'])
+        self.assertEqual(RegexUtil.find_address_matches('sdasdasana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdadasd'), ['ana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'])
+        self.assertEqual(RegexUtil.find_address_matches('sdasdana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdasd ana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse sana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'), ['ana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse', 'ana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse', 'ana_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'])
         with self.assertRaises(AddressMissingException):
             RegexUtil.find_address_matches('sdadsd')
 
-        del os.environ['BANANO']
-        self.assertEqual(RegexUtil.find_address_matches('sdasdasnano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdadasd'), ['nano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'])
-        self.assertEqual(RegexUtil.find_address_matches('sdasdnano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdasd nano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse snano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'), ['nano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse', 'nano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse', 'nano_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'])
-        with self.assertRaises(AddressMissingException):
-            RegexUtil.find_address_matches('sdadsd')
-        # XRB
-        self.assertEqual(RegexUtil.find_address_matches('sdasdasxrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdadasd'), ['xrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'])
-        self.assertEqual(RegexUtil.find_address_matches('sdasdxrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48oksesdasd xrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse sxrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'), ['xrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse', 'xrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse', 'xrb_3jb1fp4diu79wggp7e171jdpxp95auji4moste6gmc55pptwerfjqu48okse'])
-        with self.assertRaises(AddressMissingException):
-            RegexUtil.find_address_matches('sdadsd')
 
 class TestGenericUtil(unittest.TestCase):
     def setUp(self):
@@ -134,35 +103,17 @@ class TestGenericUtil(unittest.TestCase):
 
 class TestValidators(unittest.TestCase):
     def test_too_many_decimalse(self):
-        os.environ['BANANO'] = '1'
         self.assertTrue(Validators.too_many_decimals(1.234))
         self.assertFalse(Validators.too_many_decimals(1.23))
-        self.assertFalse(Validators.too_many_decimals(1.2))
-        del os.environ['BANANO']
-        self.assertTrue(Validators.too_many_decimals(1.2345678))
-        self.assertFalse(Validators.too_many_decimals(1.233456))
         self.assertFalse(Validators.too_many_decimals(1.2))
 
     def test_valid_address(self):
         # Null should always be false
         self.assertFalse(Validators.is_valid_address(None))
-        os.environ['BANANO'] = '1'
         # Valid
-        self.assertTrue(Validators.is_valid_address('ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr'))
+        self.assertTrue(Validators.is_valid_address('ana_38enhxt6k5izyrc47tptcdytga7uhftworydqsbm7gsfgecmrjrowou349ae'))
         # Bad checksum
-        self.assertFalse(Validators.is_valid_address('ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xa'))
+        self.assertFalse(Validators.is_valid_address('ana_38enhxt6k5izyrc47tptcdytga7uhftworydqsbm7gsfgecmrjrowou349ae'))
         # Bad length
-        self.assertFalse(Validators.is_valid_address('ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94x'))
-        del os.environ['BANANO']
-        # Valid
-        self.assertTrue(Validators.is_valid_address('nano_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr'))
-        # Bad checksum
-        self.assertFalse(Validators.is_valid_address('nano_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xa'))
-        # Bad length
-        self.assertFalse(Validators.is_valid_address('nano_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94x'))
-        # Valid
-        self.assertTrue(Validators.is_valid_address('xrb_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr'))
-        # Bad checksum
-        self.assertFalse(Validators.is_valid_address('xrb_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xa'))
-        # Bad length
-        self.assertFalse(Validators.is_valid_address('xrb_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94x'))
+        self.assertFalse(Validators.is_valid_address('ana_38enhxt6k5izyrc47tptcdytga7uhftworydqsbm7gsfgecmrjrowou349ae'))
+        

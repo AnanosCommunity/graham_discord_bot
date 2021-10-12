@@ -32,13 +32,13 @@ REMOVE_FAVORITE_INFO = CommandInfo(
 FAVORITES_INFO = CommandInfo(
     triggers = ["favorites"],
     overview = "View list of users you have favorited",
-    details = f"View the list of every user you have favorited. You can tip all of them using `{config.Config.instance().command_prefix}{'banfavorites' if Env.banano() else 'ntipfavorites'} <amount>`"
+    details = f"View the list of every user you have favorited. You can tip all of them using `{config.Config.instance().command_prefix}{'anafavorites'} <amount>`"
 )
 TIPFAVORITES_INFO = CommandInfo(
-    triggers = ["banfavorites" if Env.banano() else "ntipfavorites"],
+    triggers = ["anafavorites"],
     overview = "Tip all the favorites",
     details = f"Split a tip among all of the users in your favorites list - similar to a tipsplit. (**minimum tip is {Constants.TIP_MINIMUM} {Constants.TIP_UNIT}**)" +
-                f"\nExample: `{config.Config.instance().command_prefix}{'banfavorites' if Env.banano() else 'ntipfavorites'} <amount>`"
+                f"\nExample: `{config.Config.instance().command_prefix}{'anafavorites'} <amount>`"
 )
 
 class FavoriteCog(commands.Cog):

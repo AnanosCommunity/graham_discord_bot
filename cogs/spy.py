@@ -59,13 +59,10 @@ class SpyCog(commands.Cog):
         for u in user_list:
             response = f"Last known name: {u.name}```{u.id}```"
             response += f"```{u.account.address}```"
-            if Env.banano():
-                response += f"https://creeper.banano.cc/explorer/account/{u.account.address}\n"
-            else:
-                response += f"https://nanocrawler.cc/explorer/account/{u.account.address}\n"
+            response += f"https://ananault.lightcord.org/account/{u.account.address}\n"
 
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name="WFU Result", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name="WFU Result", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         embed.description = response
 
         await msg.author.send(embed=embed)
@@ -90,13 +87,10 @@ class SpyCog(commands.Cog):
         for acct in address_list:
             response = f"Last known name: {acct.user.name}```{acct.user.id}```"
             response += f"```{acct.address}```"
-            if Env.banano():
-                response += f"https://creeper.banano.cc/explorer/account/{acct.address}\n"
-            else:
-                response += f"https://nanocrawler.cc/explorer/account/{acct.address}\n"
+            response += f"https://ananault.lightcord.org/account/{acct.address}\n"
 
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name="UFW Result", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name="UFW Result", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         embed.description = response
 
         await msg.author.send(embed=embed)

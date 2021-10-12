@@ -42,7 +42,7 @@ class GrahamServer(object):
         self.logger = logging.getLogger()
         self.host = host
         self.port = port
-        self.min_amount = 10 if Env.banano() else 0.1
+        self.min_amount = 10
 
     def format_js_iso(self, date: datetime.datetime) -> str:
         """Format a datetime object into a user-friendly representation"""

@@ -25,10 +25,10 @@ from tasks.transaction_queue import TransactionQueue
 
 # Commands Documentation
 RAIN_INFO = CommandInfo(
-    triggers = ["brain" if Env.banano() else "nrain", "brian", "nrian"],
+    triggers = ["anarain", "rain"],
     overview = "Distribute a tip amount amongst active users",
     details = "Distribute amount amongst active users." +
-                f"\nExample: `{config.Config.instance().command_prefix}{'b' if Env.banano() else 'n'}rain 1000` will distribute 1000 {Env.currency_symbol()} between everyone who is active." +
+                f"\nExample: `{config.Config.instance().command_prefix}anarain 1000` will distribute 1000 {Env.currency_symbol()} between everyone who is active." +
                 f"\n **minimum amount to rain: {config.Config.instance().get_rain_minimum()} {Env.currency_symbol()}**"
 )
 
@@ -131,7 +131,7 @@ class RainCog(commands.Cog):
             try:
                 u.member = msg.guild.get_member(u.id)
                 for role in u.member.roles:
-                    if role.name.lower() in ['banano jail', 'muzzled']:
+                    if role.name.lower() in ['jail', 'muzzled', 'muted']:
                         to_remove.append(u)
             except Exception:
                 to_remove.append(u)
@@ -145,7 +145,7 @@ class RainCog(commands.Cog):
             return
 
         individual_send_amount = Env.truncate_digits(send_amount / len(active_users), max_digits=Env.precision_digits())
-        individual_send_amount_str = f"{individual_send_amount:.2f}" if Env.banano() else f"{individual_send_amount:.6f}"
+        individual_send_amount_str = f"{individual_send_amount:.2f}"
         if individual_send_amount < Constants.TIP_MINIMUM:
             await Messages.add_x_reaction(msg)
             await Messages.send_error_dm(msg.author, f"Amount is too small to divide across {len(active_users)} users")

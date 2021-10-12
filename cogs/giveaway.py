@@ -60,10 +60,10 @@ WINNERS_INFO = CommandInfo(
     details = "View the 10 most recent giveaways winners as well as the amount they've won."
 )
 TIPGIVEAWAY_INFO = CommandInfo(
-    triggers = ["donate", "do"] if Env.banano() else ["ntipgiveaway", "ntg"],
+    triggers = ["donate", "do"],
     overview = "Donate to giveaway",
     details = "Donate to the currently active giveaway to increase the pot, or donate to towards starting a giveaway automatically." +
-                f"\nExample: `{config.Config.instance().command_prefix}{'donate' if Env.banano() else 'ntipgiveaway'} 1` - Donate 1 {Env.currency_symbol()} to the current or next giveaway"
+                f"\nExample: `{config.Config.instance().command_prefix}{'donate'} 1` - Donate 1 {Env.currency_symbol()} to the current or next giveaway"
                 f"\nWhen **{config.Config.instance().get_giveaway_auto_minimum()} {Env.currency_symbol()}** is donated, a giveaway will automatically begin."
 )
 
@@ -151,18 +151,18 @@ class GiveawayCog(commands.Cog):
         return True
 
     def format_giveaway_announcement(self, giveaway: Giveaway, amount: int = None) -> discord.Embed:
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name=f"New Giveaway! #{giveaway.id}", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name=f"New Giveaway! #{giveaway.id}", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         embed.description = f"<@{giveaway.started_by.id if not giveaway.started_by_bot else self.bot.user.id}> has sponsored a giveaway of **{Env.raw_to_amount(int(giveaway.base_amount if amount is None else amount))} {Env.currency_name()}**!\n"
         fee = Env.raw_to_amount(int(giveaway.entry_fee))
         if fee > 0:
             embed.description+= f"\nThis giveaway has an entry fee of **{fee} {Env.currency_name()}**"
             embed.description+= f"\n`{config.Config.instance().command_prefix}ticket {fee}` - To enter this giveaway"
-            embed.description+= f"\n`{config.Config.instance().command_prefix}{'donate' if Env.banano() else 'ntipgiveaway'} <amount>` - To increase the pot"
+            embed.description+= f"\n`{config.Config.instance().command_prefix}{'donate'} <amount>` - To increase the pot"
         else:
             embed.description+= f"\nThis giveaway is free to enter:"
             embed.description+= f"\n`{config.Config.instance().command_prefix}ticket` - To enter this giveaway"
-            embed.description+= f"\n`{config.Config.instance().command_prefix}{'donate' if Env.banano() else 'ntipgiveaway'} <amount>` - To increase the pot"            
+            embed.description+= f"\n`{config.Config.instance().command_prefix}{'donate'} <amount>` - To increase the pot"            
         duration = (giveaway.end_at - datetime.datetime.utcnow()).total_seconds()
         if duration < 60:
             embed.description += f"\n\nThis giveaway will end in **{int(duration)} seconds**"
@@ -229,8 +229,8 @@ class GiveawayCog(commands.Cog):
         ann_message+= f"\nThey have been sent **{Env.raw_to_amount(tx_sum)} {Env.currency_symbol()}**"
         if isinstance(giveaway.started_by, User):
             ann_message+= f"\n\nThanks to <@{giveaway.started_by.id}> for sponsoring this giveaway!"
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name="We have a winner!", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name="We have a winner!", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         embed.description = ann_message
 
         for ann in announce_channels:
@@ -568,19 +568,19 @@ class GiveawayCog(commands.Cog):
             amount += Env.raw_to_amount(int(tx.amount))
 
         # Format stats message
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name=f"Giveaway #{gw.id}", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name=f"Giveaway #{gw.id}", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         fee = Env.raw_to_amount(int(gw.entry_fee))
         if pending_gw is None:
             embed.description = f"There are **{entries} entries** to win **{Env.truncate_digits(amount, max_digits=Env.precision_digits())} {Env.currency_symbol()}**\n"
             if fee > 0:
                 embed.description+= f"\nThis giveaway has an entry fee of **{fee} {Env.currency_name()}**"
                 embed.description+= f"\n`{config.Config.instance().command_prefix}ticket {fee}` - To enter this giveaway"
-                embed.description+= f"\n`{config.Config.instance().command_prefix}{'donate' if Env.banano() else 'ntipgiveaway'} <amount>` - To increase the pot"
+                embed.description+= f"\n`{config.Config.instance().command_prefix}{'donate'} <amount>` - To increase the pot"
             else:
                 embed.description+= f"\nThis giveaway is free to enter:"
                 embed.description+= f"\n`{config.Config.instance().command_prefix}ticket` - To enter this giveaway"
-                embed.description+= f"\n`{config.Config.instance().command_prefix}{'donate' if Env.banano() else 'ntipgiveaway'} <amount>` - To increase the pot"            
+                embed.description+= f"\n`{config.Config.instance().command_prefix}{'donate'} <amount>` - To increase the pot"            
             duration = (gw.end_at - datetime.datetime.utcnow()).total_seconds()
             if duration < 60:
                 embed.description += f"\n\nThis giveaway will end in **{int(duration)} seconds**"
@@ -658,8 +658,8 @@ class GiveawayCog(commands.Cog):
             response_msg += f"{adj_rank}. {amount_str} - won by {user_name}\n" 
         response_msg += "```"
 
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name=f"Here are the last {len(winners)} giveaway winners \U0001F44F", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name=f"Here are the last {len(winners)} giveaway winners \U0001F44F", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         embed.description = response_msg
 
         if not as_dm:
@@ -895,8 +895,8 @@ class GiveawayCog(commands.Cog):
                     response+= f"Use `{config.Config.instance().command_prefix}ticket {Env.format_float(fee_converted - paid_converted)}` to pay the fee and enter"
 
             # Build response
-            embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-            embed.set_author(name=f"Giveaway #{gw.id} is active!", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+            embed = discord.Embed(colour=0xC6E459)
+            embed.set_author(name=f"Giveaway #{gw.id} is active!", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
             embed.description = response
 
             await msg.author.send(embed=embed)
@@ -935,8 +935,8 @@ class GiveawayCog(commands.Cog):
                     response+= f"Use `{config.Config.instance().command_prefix}ticket {Env.format_float(fee_converted - paid_converted)} id={gw.id}` to pay the fee and enter\n"
 
         # Build response
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name=f"Here are the active giveaways!", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name=f"Here are the active giveaways!", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         embed.description = response
 
         await msg.author.send(embed=embed)

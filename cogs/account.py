@@ -67,7 +67,7 @@ class AccountCog(commands.Cog):
                     await Messages.send_error_dm(msg.author, f"You are only allowed to use {Env.precision_digits()} digits after the decimal.")
                     ctx.error = True
                     return
-                elif (ctx.send_amount < 0.01 and Env.banano()) or (ctx.send_amount < 0.000001 and not Env.banano()):
+                elif (ctx.send_amount < 0.01):
                     await Messages.send_error_dm(msg.author, f"Amount too small")
                     ctx.error = True
                     return                    
@@ -133,21 +133,21 @@ class AccountCog(commands.Cog):
             await Messages.send_error_dm(msg.author, "I failed at retrieving your address, try again later and contact my master if the issue persists.")
             return
         # Build URI
-        uri_scheme = "ban:" if Env.banano() else "nano:"
+        uri_scheme = "ana:"
         if amount == 0:
             uri = user_address
         else:
             uri = "{0}{1}?amount={2}".format(uri_scheme, user_address, Env.amount_to_raw(amount))
         # Build and send response
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name=user_address, icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name=user_address, icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         embed.set_image(url=f"https://chart.googleapis.com/chart?cht=qr&chl={uri}&chs=180x180&choe=UTF-8&chld=L|2")
         await msg.author.send(embed=embed)
         await msg.author.send(user_address)
 
     def format_balance_message(self, balance_raw: int, pending_raw: int, pending_send_db: int, pending_receive_db: int) -> discord.Embed:
-        embed = discord.Embed(colour=0xFBDD11 if Env.banano() else discord.Colour.dark_blue())
-        embed.set_author(name="Balance", icon_url="https://github.com/bbedward/graham_discord_bot/raw/master/assets/banano_logo.png" if Env.banano() else "https://github.com/bbedward/graham_discord_bot/raw/master/assets/nano_logo.png")
+        embed = discord.Embed(colour=0xC6E459)
+        embed.set_author(name="Balance", icon_url="https://github.com/AnanosCommunity/graham_discord_bot/raw/master/assets/ananos_logo.png")
         embed.description = "**Available:**\n"
         embed.description += f"```{Env.commafy(Env.format_float(Env.raw_to_amount(balance_raw - pending_send_db)))} {Env.currency_symbol()}\n"
         pending_receive_str = f"+ {Env.commafy(Env.format_float(Env.raw_to_amount(pending_raw + pending_receive_db)))} {Env.currency_symbol()}"
@@ -260,7 +260,7 @@ class AccountCog(commands.Cog):
         destination: str = ctx.destination
 
         bal = await user.get_available_balance_dec()
-        if (bal < 0.01 and Env.banano()) or (bal < 0.000001 and not Env.banano()):
+        if (bal < 0.01):
             await Messages.send_error_dm(msg.author, "You balance is 0, so I can't make any withdraw")
             return
 
