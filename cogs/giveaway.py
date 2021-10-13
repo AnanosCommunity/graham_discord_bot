@@ -27,7 +27,7 @@ from models.constants import Constants
 
 # Commands Documentation
 START_GIVEAWAY_INFO = CommandInfo(
-    triggers = ["giveaway", "givearai"],
+    triggers = ["giveaway"],
     overview = "Start a giveaway",
     details = "Start a giveaway with specified parameters" +
                 f"\n**minimum amount: {config.Config.instance().get_giveaway_minimum()} {Env.currency_symbol()}**" +

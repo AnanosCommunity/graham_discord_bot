@@ -26,7 +26,7 @@ class Config(object):
             except FileNotFoundError:
                 cls.yaml = None
             parser = argparse.ArgumentParser(description=f"Graham Ananos Discord Bot v{__version__}")
-            parser.add_argument('-p', '--prefix', type=str, help='Command prefix for bot commands', default='!')
+            parser.add_argument('-p', '--prefix', type=str, help='Command prefix for bot commands', default='.')
             parser.add_argument('-l', '--log-file', type=str, help='Log file location', default='/tmp/graham_bot.log')
             parser.add_argument('-s', '--status', type=str, help="The bot's 'playing status'", default=None, required=False)
             parser.add_argument('-u', '--node-url', type=str, help='URL of the node, e.g.: http://[::1]:7072', default='http://127.0.0.1:7176')
