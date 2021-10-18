@@ -25,7 +25,7 @@ from tasks.transaction_queue import TransactionQueue
 
 # Commands Documentation
 RAIN_INFO = CommandInfo(
-    triggers = ["anarain", "rain"],
+    triggers = ["anarain", "rain", "analrain"],
     overview = "Distribute a tip amount amongst active users",
     details = "Distribute amount amongst active users." +
                 f"\nExample: `{config.Config.instance().command_prefix}anarain 1000` will distribute 1000 {Env.currency_symbol()} between everyone who is active." +

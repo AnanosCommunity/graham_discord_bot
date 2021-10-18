@@ -21,7 +21,7 @@ from util.util import Utils
 
 ## Command documentation
 TIP_INFO = CommandInfo(
-    triggers = ["ana", "a"],
+    triggers = ["ana", "a", "anal"],
     overview = "Send a tip to mentioned users",
     details = f"Tip specified amount to mentioned user(s) (**minimum tip is {Constants.TIP_MINIMUM} {Constants.TIP_UNIT}**)" +
         "\nThe recipient(s) will be notified of your tip via private message" +
@@ -29,7 +29,7 @@ TIP_INFO = CommandInfo(
      f"Example: `{config.Config.instance().command_prefix}ana 2 @user1 @user2` would send 2 to user1 and 2 to user2"
 )
 TIPSPLIT_INFO = CommandInfo(
-    triggers = ["anasplit", "as"],
+    triggers = ["anasplit", "as", "analsplit"],
     overview = "Split a tip among mentioned users",
     details = f"Divide the specified amount between mentioned user(s) (**minimum tip is {Constants.TIP_MINIMUM} {Constants.TIP_UNIT}**)" +
         "\nThe recipient(s) will be notified of your tip via private message" +
@@ -37,13 +37,13 @@ TIPSPLIT_INFO = CommandInfo(
      f"Example: `{config.Config.instance().command_prefix}anasplit 2 @user1 @user2` would send 1 to user1 and 2 to user2"
 )
 TIPRANDOM_INFO = CommandInfo(
-    triggers = ["anarandom", "ar"],
+    triggers = ["anarandom", "ar", "randomanal", "analrandom"],
     overview = "Tip an active user at random.",
     details = f"Tips the specified amount to an active user at random (**minimum tip is {Constants.TIPRANDOM_MINIMUM} {Constants.TIP_UNIT}**)" +
         "\nThe recipient will be notified of your tip via private message and you'll be notified of who the random recipient was."
 )
 TIPAUTHOR_INFO = CommandInfo(
-    triggers = ["anaauthor", "tipauthor"],
+    triggers = ["anaauthor", "tipauthor", "analauthor"],
     overview = "Donate to support my creator",
     details = f"Support the host of this bot (Not Thomiz)"
 )
